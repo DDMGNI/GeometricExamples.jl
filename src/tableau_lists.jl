@@ -211,5 +211,13 @@ function get_tableau_list_vprk_projection(T=Float64)
         (IntegratorVPRKpSymmetric,    getTableauVPLobIIIG4(),   "vprk_lobIIIG4_psymmetric" ),
         (IntegratorVPRKpSymplectic,   getTableauVPLobIIIG4(),   "vprk_lobIIIG4_psymplectic"),
         (IntegratorVPRKpMidpoint,     getTableauVPLobIIIG4(),   "vprk_lobIIIG4_pmidpoint"  ),
+        )
+    end
+
+
+function get_tableau_list_vprk_radau(T=Float64)
+    tableau_list = (
+        (IntegratorVPRK,              getTableauVPRadIIAIIA2(), "vprk_radIIA2"),
+        (IntegratorVPRK,              getTableauVPRadIIAIIA3(), "vprk_radIIA3"),
     )
 end
