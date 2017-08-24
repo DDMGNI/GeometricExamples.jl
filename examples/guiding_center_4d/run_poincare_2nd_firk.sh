@@ -1,0 +1,6 @@
+#!/bin/bash
+
+julia guiding_center_4d_fast_poincare_invariant_2nd_firk_dt1.jl
+julia guiding_center_4d_fast_poincare_invariant_2nd_firk_dt2.jl
+julia guiding_center_4d_fast_poincare_invariant_2nd_firk_dt5.jl
+julia guiding_center_4d_fast_poincare_invariant_2nd_firk_dt10.jl
