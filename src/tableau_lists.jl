@@ -2,6 +2,18 @@
 # list of integrators (integrator, tableau, sim_id)
 
 
+function get_tableau_list_erk(T=Float64)
+    tableau_list = (
+        # (IntegratorERK,               getTableauExplicitEuler(),     "euler"  ),
+        # (IntegratorERK,               getTableauExplicitMidpoint(),  "emp"    ),
+        # (IntegratorERK,               getTableauHeun(),              "heun"   ),
+        # (IntegratorERK,               getTableauKutta(),             "kutta"  ),
+        (IntegratorERK,               getTableauERK4(),              "erk4_16"),
+        (IntegratorERK,               getTableauERK438(),            "erk4_38"),
+    )
+end
+
+
 function get_tableau_list_firk(T=Float64)
     tableau_list = (
         (IntegratorFIRK,              getTableauGLRK(1),      "glrk1"      ),
@@ -219,5 +231,18 @@ function get_tableau_list_vprk_radau(T=Float64)
     tableau_list = (
         (IntegratorVPRK,              getTableauVPRadIIAIIA2(), "vprk_radIIA2"),
         (IntegratorVPRK,              getTableauVPRadIIAIIA3(), "vprk_radIIA3"),
+    )
+end
+
+
+function get_tableau_list_splitting(T=Float64)
+    tableau_list = (
+        (IntegratorSplitting,  getTableauLieA(),             "LieA"           ),
+        (IntegratorSplitting,  getTableauLieB(),             "LieB"           ),
+        (IntegratorSplitting,  getTableauStrang(),           "Strang"         ),
+        (IntegratorSplitting,  getTableauMcLachlan2(),       "McLachlan2"     ),
+        (IntegratorSplitting,  getTableauMcLachlan4(),       "McLachlan4"     ),
+        (IntegratorSplitting,  getTableauTripleJump(),       "TripleJump"     ),
+        (IntegratorSplitting,  getTableauSuzukiFractal(),    "SuzukiFractal"  ),
     )
 end
