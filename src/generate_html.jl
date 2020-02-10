@@ -154,7 +154,7 @@ function generate_html(integrators, figures, prefix, suffix, fig_dir, output_dir
     # plots for each integrator/tableau combination
     html = html * "<tbody>\n"
     for run in integrators
-        int   = string(run[1])[(rsearchindex(string(run[1]), ".Integrator") + 11):end]
+        int   = string(run[1])[(lastindex(findlast("Integrator", string(run[1]))) + 1):end]
         tab   = string(run[2].name)
         file  = run[3]
 
