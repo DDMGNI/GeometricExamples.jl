@@ -1,5 +1,5 @@
 
-function generate_html(integrators, figures, prefix, suffix, fig_dir, output_dir, output_file;
+function generate_html(integrators, figures, figures_detail, prefix, suffix, fig_dir, output_dir, output_file;
                         title="", params=nothing, max_height="200px")
     header = """
     <!DOCTYPE html>
@@ -20,6 +20,13 @@ function generate_html(integrators, figures, prefix, suffix, fig_dir, output_dir
                 h1 {
                     font-size: 1.75em;
                 }
+                a {
+                    color: #222;
+                    text-decoration: none;
+        		}
+                a:hover {
+                    text-decoration: underline;
+        		}
                 table {
         			border: 0px solid #ffffff;
         		}
@@ -141,8 +148,9 @@ function generate_html(integrators, figures, prefix, suffix, fig_dir, output_dir
     # table header
     html = html * "<thead>\n"
     html = html * "<tr>\n"
-    html = html * "<th onclick='sortTable(0)'><b>Integrator</b></th>\n"
-    html = html * "<th onclick='sortTable(1)'><b>Tableau</b></th>\n"
+    html = html * "<th onclick='sortTable(0)'><b>Run ID</b></th>\n"
+    html = html * "<th onclick='sortTable(1)'><b>Integrator</b></th>\n"
+    html = html * "<th onclick='sortTable(2)'><b>Tableau</b></th>\n"
 
     for fig in figures
         html = html * "<th></th>\n"
@@ -154,16 +162,18 @@ function generate_html(integrators, figures, prefix, suffix, fig_dir, output_dir
     # plots for each integrator/tableau combination
     html = html * "<tbody>\n"
     for run in integrators
-        int   = string(run[1])[(lastindex(findlast("Integrator", string(run[1]))) + 1):end]
-        tab   = string(run[2].name)
-        file  = run[3]
+
+        int  = string(run[1])[(lastindex(findlast("Integrator", string(run[1]))) + 1):end]
+        tab  = string(run[2].name)
+        rid  = prefix * run[3]
 
         html = html * "<tr>\n"
+        html = html * "<td style='text-align: left'>" * "<a href='" * rid * ".html" * "'>" * rid * "</a>" * "</td>\n"
         html = html * "<td style='text-align: left'>" * int * "</td>\n"
         html = html * "<td style='text-align: left'>" * tab * "</td>\n"
 
         for fig in figures
-            fig_file = fig_dir * "/" * prefix * file * fig * suffix
+            fig_file = fig_dir * "/" * rid * fig * suffix
 
             html = html * "<td>"
             if isfile(output_dir * "/" * fig_file)
@@ -175,6 +185,37 @@ function generate_html(integrators, figures, prefix, suffix, fig_dir, output_dir
         end
 
         html = html * "</tr>\n"
+
+
+        # generate empty output string for run file
+        html_run = ""
+
+        # add header
+        html_run = html_run * header
+
+        # add title
+        if title != ""
+            html_run = html_run * "<h1>" * title * "</h1>\n"
+        end
+
+        for fig in figures_detail
+            fig_file = rid * fig * suffix
+
+            if isfile(output_dir * "/" * fig_dir * "/" * fig_file)
+                html_run = html_run * "<img src='" * fig_dir * "/" * fig_file * "' style='max-height: none;'>\n"
+                html_run = html_run * "<br/>\n"
+                html_run = html_run * fig_file * "<br/><br/>\n\n"
+            end
+        end
+
+        # add footer
+        html_run = html_run * footer
+
+        # write file
+        open(output_dir * "/" * rid * ".html", "w") do f
+            write(f, html_run)
+        end
+
     end
     html = html * "</tbody>\n"
 
@@ -208,7 +249,7 @@ function generate_html(integrators, figures, prefix, suffix, fig_dir, output_dir
     # add footer
     html = html * footer
 
-
+    # write file
     open(output_dir * "/" * output_file, "w") do f
         write(f, html)
     end
