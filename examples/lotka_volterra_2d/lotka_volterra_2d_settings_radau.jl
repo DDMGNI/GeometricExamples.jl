@@ -1,6 +1,6 @@
 
 const out_dir = "../../docs/src/integrators/projection_methods/lotka_volterra_2d/"
-const run_id  = "lotka_volterra_2d_vprk"
+const run_id  = "lotka_volterra_2d_vprk_radau"
 
 # create list of figures to put in list
 figures_custom = ("_momentum_error",)

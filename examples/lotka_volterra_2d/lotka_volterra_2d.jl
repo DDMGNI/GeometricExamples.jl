@@ -18,15 +18,6 @@ if !isdir(out_dir * "/" * fig_dir)
     mkpath(out_dir * "/" * fig_dir)
 end
 
-# create list of figures to put in list
-figures = (
-    "_solution",
-    "_energy_error"
-)
-
-# suffix of figure files
-fig_suff = ".png"
-
 # collect simulation parameters
 function get_params(Δt, ntime, problem)
     params = OrderedDict()

@@ -5,9 +5,9 @@ using ImportMacros
 
 @import GeometricProblems.LotkaVolterra2d as problem
 
-include("lotka_volterra_2d_settings_vprk.jl")
+include("lotka_volterra_2d_settings_radau.jl")
 
-tableau_list = get_tableau_list_vprk_projection()
+tableau_list = get_tableau_list_vprk_radau()
 
 equ = problem.lotka_volterra_2d_iode()
 
